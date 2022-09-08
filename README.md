@@ -2,6 +2,8 @@
 
 Copy the `*.js` files into your Scriptable iCloud Drive folder (or copy & paste into a new script in the Scriptable app).
 
+Each script's file name includes the widget size in brackets (for example: `(small)` or `(medium)`) needed for it to be displayed properly.
+
 # Preview
 
 ## F1 standings (small).js
