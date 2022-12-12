@@ -7,7 +7,6 @@ widget.backgroundColor = Color.white();
 const mainStack = widget.addStack();
 mainStack.layoutHorizontally();
 mainStack.centerAlignContent();
-mainStack.setPadding(0, 4, 0, 0);
 
 const nextRaceStack = mainStack.addStack();
 nextRaceStack.layoutVertically();
@@ -15,11 +14,27 @@ nextRaceStack.centerAlignContent();
 
 const nextRaceData = await fetchNextRace();
 
-mainStack.addSpacer();
+if (nextRaceData.season) {
+  const car = nextRaceStack.addText("🏎💨");
+  car.font = Font.boldSystemFont(40);
+  car.leftAlignText();
+  nextRaceStack.addSpacer(8);
 
-await setNextCircuitStack(nextRaceStack, nextRaceData);
-await setNextRaceStack(nextRaceStack, nextRaceData);
-await setNextQualyStack(nextRaceStack, nextRaceData);
+  const title = nextRaceStack.addText("See you in");
+  title.font = Font.systemFont(23);
+  title.textColor = Color.black();
+
+  const season = nextRaceStack.addText(nextRaceData.season);
+  season.font = Font.boldSystemFont(42);
+  season.textColor = Color.black();
+} else {
+  mainStack.setPadding(0, 4, 0, 0);
+  mainStack.addSpacer();
+
+  await setNextCircuitStack(nextRaceStack, nextRaceData);
+  await setNextRaceStack(nextRaceStack, nextRaceData);
+  await setNextQualyStack(nextRaceStack, nextRaceData);
+}
 
 Script.setWidget(widget);
 Script.complete();
@@ -186,6 +201,9 @@ async function fetchNextRace() {
   const req = new Request(`http://ergast.com/api/f1/current/next.json`);
   const data = await req.loadJSON();
 
+  if (!data.MRData.RaceTable.Races.length) {
+    return data.MRData.RaceTable;
+  }
   const name = data.MRData.RaceTable.Races[0].raceName;
   const country = data.MRData.RaceTable.Races[0].Circuit.Location.country;
   const circuitId = data.MRData.RaceTable.Races[0].Circuit.circuitId;
