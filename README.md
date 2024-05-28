@@ -1,3 +1,6 @@
+# ⚠️ Abandoned ⚠️
+I haven't updated the widgets to reflect the changes in the data returned by the API because of lack of time.
+
 # F1 widget scripts for Scriptable
 
 Copy the `*.js` files into your Scriptable iCloud Drive folder (or copy & paste into a new script in the Scriptable app).
